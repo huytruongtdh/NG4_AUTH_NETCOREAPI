@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
-import { JwtComponent } from './_helpers/jwt/jwt.component';
+import { routing } from './app.routing';
 
 
 @NgModule({
@@ -18,10 +18,10 @@ import { JwtComponent } from './_helpers/jwt/jwt.component';
     LoginComponent,
     RegisterComponent,
     AlertComponent,
-    JwtComponent,
   ],
   imports: [
-    BrowserModule
+      BrowserModule,
+      routing
   ],
   providers: [ AlertService ],
   bootstrap: [AppComponent]
