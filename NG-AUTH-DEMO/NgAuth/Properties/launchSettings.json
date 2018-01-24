@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "NG4_REG_LOG": {
+    "NgAuth": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
