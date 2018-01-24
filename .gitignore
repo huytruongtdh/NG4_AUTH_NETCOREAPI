@@ -2,10 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/NG4_REG_LOG/.vs
-/NG4_REG_LOG/NG4_REG_LOG/bin
-/NG4_REG_LOG/NG4_REG_LOG/obj
+/NG-AUTH-DEMO/.vs
+/NG-AUTH-DEMO/NgAuth/bin
+/NG-AUTH-DEMO/NgAuth/obj
 
-/NG4_REG_LOG/NG4_REG_LOG/node_modules
-/NG4_REG_LOG/NG4_REG_LOG/wwwroot/clientapp
+/NG-AUTH-DEMO/NgAuth/node_modules
+/NG-AUTH-DEMO/NgAuth/wwwroot/clientapp
 
+/NG-AUTH-DEMO/.vscode
