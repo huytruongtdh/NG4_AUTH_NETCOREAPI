@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -10,6 +10,7 @@ import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
 import { RouterModule } from '@angular/router';
 import { routing } from './app.routing';
+import { UserService } from './_services/user.service';
 
 let routes = [
     { path: 'home', component: HomeComponent },
@@ -28,10 +29,11 @@ let routes = [
   ],
   imports: [
       BrowserModule,
+      FormsModule,
       routing
   ],
   //exports: [ RouterModule ],
-  providers: [ AlertService ],
+  providers: [ AlertService, UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
