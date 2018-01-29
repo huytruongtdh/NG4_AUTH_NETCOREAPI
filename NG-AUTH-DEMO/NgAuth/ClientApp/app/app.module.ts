@@ -8,7 +8,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { routing } from './app.routing';
+
+let routes = [
+    { path: 'home', component: HomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' }
+];
 
 @NgModule({
   declarations: [
@@ -20,12 +28,9 @@ import { Routes, RouterModule } from '@angular/router';
   ],
   imports: [
       BrowserModule,
-      RouterModule.forRoot([
-          { path: 'home', component: HomeComponent },
-          { path: 'login', component: LoginComponent },
-          { path: '', redirectTo: 'home', pathMatch: 'full' }
-      ])
+      routing
   ],
+  //exports: [ RouterModule ],
   providers: [ AlertService ],
   bootstrap: [AppComponent]
 })
