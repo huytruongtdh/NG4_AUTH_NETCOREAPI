@@ -1,13 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../_models/user';
 
 @Injectable()
 export class UserService {
-    create(user: any): Observable<any> {
-        console.log(user);
-        return of(user);
+
+    constructor(private http: HttpClient) { }
+
+    getAll() {
+        return this.http.get<User[]>('/api/users');
     }
 
-    constructor() { }
+    getById(id: number) {
+        return this.http.get('/api/users/' + id);
+    }
+
+    create(user: User) {
+        return this.http.post('/api/users', user);
+    }
+
+    update(user: User) {
+        return this.http.put('/api/users/' + user.id, user);
+    }
+
+    delete(id: number) {
+        return this.http.delete('/api/users/' + id);
+    }
 }

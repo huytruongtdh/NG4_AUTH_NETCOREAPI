@@ -11,6 +11,10 @@ import { AlertService } from './_services/alert.service';
 import { RouterModule } from '@angular/router';
 import { routing } from './app.routing';
 import { UserService } from './_services/user.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { fakeBackendProvider } from './_helpers/fake-backend';
+import { JwtInterceptor } from './_helpers/jwt-interceptor';
+import { AuthenticationService } from './_services/authentication.service';
 
 let routes = [
     { path: 'home', component: HomeComponent },
@@ -22,18 +26,29 @@ let routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AlertComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent,
   ],
   imports: [
       BrowserModule,
       FormsModule,
+      HttpClientModule,
       routing
   ],
-  //exports: [ RouterModule ],
-  providers: [ AlertService, UserService ],
+  providers: [
+      AlertService,
+      AuthenticationService,
+      UserService,
+      {
+          provide: HTTP_INTERCEPTORS,
+          useClass: JwtInterceptor,
+          multi: true
+      },
+      // provider used to create fake backend
+      //fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
