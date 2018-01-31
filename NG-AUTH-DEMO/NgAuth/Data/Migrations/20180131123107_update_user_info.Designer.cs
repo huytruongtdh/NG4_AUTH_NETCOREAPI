@@ -11,9 +11,10 @@ using System;
 namespace NgAuth.Data.Migrations
 {
     [DbContext(typeof(NgAuthContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180131123107_update_user_info")]
+    partial class update_user_info
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

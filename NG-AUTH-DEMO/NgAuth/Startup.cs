@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NgAuth.Data;
 using NgAuth.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace NgAuth
 {
@@ -33,6 +35,27 @@ namespace NgAuth
                 .AddEntityFrameworkStores<NgAuthContext>()
                 .AddDefaultTokenProviders();
 
+            // Config for bearer token here:
+            //services.AddAuthentication()
+            //    .AddCookie()
+            //    .AddJwtBearer(cfg => new TokenValidationParameters {
+            //        ValidIssuer = Configuration["Tokens:Issuer"],
+            //        ValidAudience = Configuration["Tokens:Audience"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+            //    });
+
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
+
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
@@ -43,6 +66,8 @@ namespace NgAuth
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
