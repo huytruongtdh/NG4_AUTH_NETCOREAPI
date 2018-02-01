@@ -25,6 +25,7 @@ namespace NgAuth.Data
             this.UserName = model.UserName;
             this.Email = model.Email;
             this.PhoneNumber = model.PhoneNumber;
+            this.Password = model.Password;
         }
     }
 }

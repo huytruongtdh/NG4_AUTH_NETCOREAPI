@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
 import { UserService } from '../_services/user.service';
+import { AuthenticationService } from '../_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -8,15 +10,11 @@ import { UserService } from '../_services/user.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
     currentUser: User;
     users: User[] = [];
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!this.currentUser) {
-            this.currentUser = new User();
-        }
     }
 
     ngOnInit() {
@@ -24,16 +22,10 @@ export class HomeComponent implements OnInit {
     }
 
     deleteUser(id: number) {
-        this.userService.delete(id)
-            .subscribe(() => {
-                this.loadAllUsers();
-            });
+        this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
     }
 
     private loadAllUsers() {
-        this.userService.getAll()
-            .subscribe(users => {
-                this.users = users;
-            });
+        this.userService.getAll().subscribe(users => { this.users = users; });
     }
 }

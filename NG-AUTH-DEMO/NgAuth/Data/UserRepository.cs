@@ -65,17 +65,17 @@ namespace NgAuth.Data
             {
                 var result = Task.Run(async () => await _userManager.UpdateAsync(user)).Result;
                 if (!result.Succeeded)
-                    throw new Exception("UpdateAsync is failed");
+                    throw new Exception(ShowErrorMessages(result.Errors));
 
                 if (!string.IsNullOrEmpty(newPassword))
                 {
                     result = Task.Run(async () => await _userManager.RemovePasswordAsync(user)).Result;
                     if (!result.Succeeded)
-                        throw new Exception("RemovePasswordAsync is failed");
+                        throw new Exception(ShowErrorMessages(result.Errors));
 
                     result = Task.Run(async () => await _userManager.AddPasswordAsync(user, newPassword)).Result;
                     if (!result.Succeeded)
-                        throw new Exception("AddPasswordAsync is failed");
+                        throw new Exception(ShowErrorMessages(result.Errors));
                 }
             }
 
@@ -96,6 +96,11 @@ namespace NgAuth.Data
             //    if (!r.Succeeded)
             //        throw new Exception("UpdateAsync unsuccessful");
             //}
+        }
+
+        private string ShowErrorMessages(IEnumerable<IdentityError> errors)
+        {
+            return string.Join("\n", errors.Select(s=> s.Code + ": " + s.Description));
         }
     }
 }

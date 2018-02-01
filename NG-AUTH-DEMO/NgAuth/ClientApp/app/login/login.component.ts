@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../_services/alert.service';
 
 @Component({
@@ -8,33 +8,36 @@ import { AlertService } from '../_services/alert.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
 
     constructor(
-        //private route: ActivedRoute,
+        private route: ActivatedRoute,
         private router: Router,
-        private authService: AuthenticationService,
+        private authenticationService: AuthenticationService,
         private alertService: AlertService) { }
 
     ngOnInit() {
+        // reset login status
+        this.authenticationService.logout();
+
+        // get return url from route parameters or default to '/'
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
-        console.log(this.model);
-
         this.loading = true;
-        this.authService.login(this.model.userName, this.model.password)
-            .subscribe(data => {
-                alert('login success!');
-                this.router.navigate(['/home']);
-                //this.router.navigate(['']);
-            }, error => {
+        this.authenticationService.login(this.model.username, this.model.password)
+            .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+            },
+            error => {
                 this.alertService.error(error);
                 this.loading = false;
             });
-
     }
 }

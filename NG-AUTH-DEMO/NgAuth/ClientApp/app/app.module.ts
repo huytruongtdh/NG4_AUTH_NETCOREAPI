@@ -15,6 +15,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { JwtInterceptor } from './_helpers/jwt-interceptor';
 import { AuthenticationService } from './_services/authentication.service';
+import { AuthGuard } from './_guards/auth.guard';
 
 let routes = [
     { path: 'home', component: HomeComponent },
@@ -24,31 +25,33 @@ let routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AlertComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
-  ],
-  imports: [
-      BrowserModule,
-      FormsModule,
-      HttpClientModule,
-      routing
-  ],
-  providers: [
-      AlertService,
-      AuthenticationService,
-      UserService,
-      {
-          provide: HTTP_INTERCEPTORS,
-          useClass: JwtInterceptor,
-          multi: true
-      },
-      // provider used to create fake backend
-      //fakeBackendProvider
-  ],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        routing
+    ],
+    declarations: [
+        AppComponent,
+        AlertComponent,
+        HomeComponent,
+        LoginComponent,
+        RegisterComponent
+    ],
+    providers: [
+        AuthGuard,
+        AlertService,
+        AuthenticationService,
+        UserService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        },
+
+        // provider used to create fake backend
+        //fakeBackendProvider
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
